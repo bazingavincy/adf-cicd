@@ -3,37 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Web1",
-				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "getaccesstokenusingsp",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"method": "POST",
-					"headers": {
-						"Content-Type": "application/json",
-						"Authorization": {
-							"value": "Bearer @{activity('getaccesstokenusingsp').output.access_token}",
-							"type": "Expression"
-						}
-					},
-					"url": "https://management.chinacloudapi.cn/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincyRG01/providers/Microsoft.DataFactory/factories/VincyADF/pipelines/testgateway/createRun?api-version=2018-06-01"
-				}
-			},
-			{
 				"name": "getaccesstokenusingsp",
 				"type": "WebActivity",
 				"dependsOn": [],
