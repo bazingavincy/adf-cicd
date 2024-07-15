@@ -1,0 +1,10 @@
+{
+	"name": "storageendppint",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincystorage/providers/Microsoft.Storage/storageAccounts/vincystoragecn3",
+		"groupId": "blob",
+		"fqdns": [
+			"vincystoragecn3.blob.core.chinacloudapi.cn"
+		]
+	}
+}

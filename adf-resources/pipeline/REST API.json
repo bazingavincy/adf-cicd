@@ -1,0 +1,34 @@
+{
+	"name": "REST API",
+	"properties": {
+		"activities": [
+			{
+				"name": "trigger PBI",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://api.powerbi.cn/v1.0/myorg/groups/9df2b1f9-05fe-448a-8010-986ae9338748/datasets/83781bb4-8c93-48d1-9c4d-7a08837acd66/refreshes",
+					"body": {
+						"notifyOption": "NoNotification"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://analysis.chinacloudapi.cn/powerbi/api"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-08-28T13:57:57Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

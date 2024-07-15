@@ -1,0 +1,23 @@
+{
+	"name": "VincyADF",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "false",
+			"factoryStagingLSReferenceName": "AzureBlobStorage1",
+			"factoryStagingLSType": "LinkedServiceReference",
+			"factoryStagingFolderPath": "testvv1"
+		}
+	},
+	"location": "chinaeast2",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "cbb71749-90e1-4d55-a76f-d9a7e9c18fb2",
+		"tenantId": "954ddad8-66d7-47a8-8f9f-1316152d9587",
+		"userAssignedIdentities": {
+			"/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourcegroups/sql_server/providers/Microsoft.ManagedIdentity/userAssignedIdentities/vincyuamiforpsql": {
+				"clientId": "ccd875f2-7524-443c-8dc9-81dee6a4c710",
+				"principalId": "d49ddce1-9de7-4689-b13a-93eed8f20759"
+			}
+		}
+	}
+}

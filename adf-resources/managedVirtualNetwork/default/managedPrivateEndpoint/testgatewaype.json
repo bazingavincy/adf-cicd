@@ -1,0 +1,10 @@
+{
+	"name": "testgatewaype",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincyRG01/providers/Microsoft.Sql/servers/vincyserver",
+		"groupId": "sqlServer",
+		"fqdns": [
+			"vincyserver.database.chinacloudapi.cn"
+		]
+	}
+}

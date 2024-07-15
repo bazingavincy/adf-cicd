@@ -1,0 +1,17 @@
+{
+	"name": "FileServerfromvincyvm",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\testFile",
+			"userId": "vincytian",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkNGNlM2VkOS01ZmMyLTRlNGMtYjNkNC00NmYzNTA5OWZjNTciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "vincyazurevmIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

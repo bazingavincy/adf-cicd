@@ -1,0 +1,10 @@
+{
+	"name": "gen2privateendpoint",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincytest/providers/Microsoft.Storage/storageAccounts/vincygen2",
+		"groupId": "blob",
+		"fqdns": [
+			"vincygen2.blob.core.chinacloudapi.cn"
+		]
+	}
+}

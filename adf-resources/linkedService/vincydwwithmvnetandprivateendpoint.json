@@ -1,0 +1,16 @@
+{
+	"name": "vincydwwithmvnetandprivateendpoint",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=vincyserver.database.chinacloudapi.cn;initial catalog=vincydw;user id=vincytian",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmNzk0ZDdiZC1iODM5LTRjYmUtYmM4NS1kNTVkOGYyYjNjMGIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "vincySHIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

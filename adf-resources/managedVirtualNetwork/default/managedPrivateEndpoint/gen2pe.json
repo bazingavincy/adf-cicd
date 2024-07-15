@@ -1,0 +1,10 @@
+{
+	"name": "gen2pe",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincytest/providers/Microsoft.Storage/storageAccounts/vincygen2",
+		"groupId": "dfs",
+		"fqdns": [
+			"vincygen2.dfs.core.chinacloudapi.cn"
+		]
+	}
+}

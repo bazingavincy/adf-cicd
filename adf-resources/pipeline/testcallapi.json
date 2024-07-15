@@ -1,0 +1,80 @@
+{
+	"name": "testcallapi",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "getaccesstokenusingsp",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json",
+						"Authorization": {
+							"value": "Bearer @{activity('getaccesstokenusingsp').output.access_token}",
+							"type": "Expression"
+						}
+					},
+					"url": "https://management.chinacloudapi.cn/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincyRG01/providers/Microsoft.DataFactory/factories/VincyADF/pipelines/testgateway/createRun?api-version=2018-06-01"
+				}
+			},
+			{
+				"name": "getaccesstokenusingsp",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"url": "https://login.partner.microsoftonline.cn/954ddad8-66d7-47a8-8f9f-1316152d9587/oauth2/token",
+					"body": "grant_type=client_credentials&client_id=f4e35ced-72e4-4087-8536-6bcccb5ced27&client_secret=uAat1u.V.vu0UTz52Jdi-k5nm0Qo2mUy.m&resource=https://management.chinacloudapi.cn"
+				}
+			}
+		],
+		"parameters": {
+			"grant_type": {
+				"type": "String",
+				"defaultValue": "client_credentials"
+			},
+			"client_id": {
+				"type": "String",
+				"defaultValue": "f4e35ced-72e4-4087-8536-6bcccb5ced27"
+			},
+			"client_secret": {
+				"type": "String",
+				"defaultValue": "uAat1u.V.vu0UTz52Jdi-k5nm0Qo2mUy.m"
+			},
+			"resource": {
+				"type": "String",
+				"defaultValue": "https://management.chinacloudapi.cn"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-07-09T02:49:40Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

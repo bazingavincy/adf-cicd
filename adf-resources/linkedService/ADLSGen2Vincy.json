@@ -1,0 +1,16 @@
+{
+	"name": "ADLSGen2Vincy",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://vincygen2.dfs.core.chinacloudapi.cn/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDUzQzFCREJDLTBCRjYtNDg5OS05QTI0LTEzQ0Y1Qzc4QUNBNV83NTkxM2RiNy05NWFlLTRjMjMtODc2YS04NGE1ZTE4YmVhMTgiDQp9"
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime4",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

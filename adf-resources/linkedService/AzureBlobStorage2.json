@@ -1,0 +1,21 @@
+{
+	"name": "AzureBlobStorage2",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"azureCloudType": "AzurePublic",
+			"serviceEndpoint": "https://vincyglobalstorage.blob.core.windows.net",
+			"tenant": "11271f3d-3800-4655-ba64-01957965b2ae",
+			"servicePrincipalId": "de553ab9-7303-41d9-9519-866a78f9f1e2",
+			"servicePrincipalCredentialType": "ServicePrincipalKey",
+			"accountKind": "StorageV2",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjMDJhOTg5NS00Y2YxLTRhNTEtYjg0Ni02ZDlkYmRkMDFhNzgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "vincySHIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

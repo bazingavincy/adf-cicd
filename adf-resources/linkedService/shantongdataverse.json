@@ -1,0 +1,20 @@
+{
+	"name": "shantongdataverse",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "CommonDataServiceForApps",
+		"typeProperties": {
+			"deploymentType": "Online",
+			"serviceUri": "https://shantongtest.crm5.dynamics.com/  ",
+			"authenticationType": "AADServicePrincipal",
+			"servicePrincipalId": "d1ad1b12-9b68-4bca-95c4-c938c0fb556c",
+			"servicePrincipalCredentialType": "ServicePrincipalKey",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5ZTI2MGM3ZS02ZTcwLTQ0ZTktOGFlZS1hNWMzNzVkZmRhYmQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "vincySHIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
