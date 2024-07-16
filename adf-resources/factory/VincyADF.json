@@ -1,0 +1,12 @@
+{
+	"name": "VincyADF",
+	"properties": {
+		"globalParameters": {
+			"testglobal": {
+				"type": "string",
+				"value": "vincy"
+			}
+		}
+	},
+	"location": "chinaeast2"
+}
