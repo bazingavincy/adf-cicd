@@ -118,7 +118,7 @@
                     "connectionString": "|:-connectionString:secureString",
                     "hostKeyFingerprint": "=",
                     "mlWorkspaceName": "=",
-                    "encryptedCredential": "="
+                    "deploymentType": "="
                 }
             }
         },
