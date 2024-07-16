@@ -1,0 +1,836 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "VincyADF"
+		},
+		"ADLSGen2Vincy_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLSGen2Vincy'"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"VincySynapse_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'VincySynapse'"
+		},
+		"sqlservervnet_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'sqlservervnet'"
+		},
+		"gen2pe_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincytest/providers/Microsoft.Storage/storageAccounts/vincygen2"
+		},
+		"gen2pe_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
+		},
+		"gen2pe_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"vincygen2.dfs.core.chinacloudapi.cn"
+			]
+		},
+		"gen2privateendpoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincytest/providers/Microsoft.Storage/storageAccounts/vincygen2"
+		},
+		"gen2privateendpoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"gen2privateendpoint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"vincygen2.blob.core.chinacloudapi.cn"
+			]
+		},
+		"storageendppint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincystorage/providers/Microsoft.Storage/storageAccounts/vincystoragecn3"
+		},
+		"storageendppint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"storageendppint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"vincystoragecn3.blob.core.chinacloudapi.cn"
+			]
+		},
+		"testgatewaype_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincyRG01/providers/Microsoft.Sql/servers/vincyserver"
+		},
+		"testgatewaype_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"testgatewaype_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"vincyserver.database.chinacloudapi.cn"
+			]
+		},
+		"ADLSGen2Vincy_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://vincygen2.dfs.core.chinacloudapi.cn/"
+		},
+		"sqlservervnet_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "vincyserver.database.chinacloudapi.cn"
+		},
+		"sqlservervnet_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "vincydb"
+		},
+		"sqlservervnet_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "vincytian"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/default/gen2pe')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('gen2pe_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('gen2pe_properties_groupId')]",
+				"fqdns": "[parameters('gen2pe_properties_fqdns')]"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/gen2privateendpoint')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('gen2privateendpoint_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('gen2privateendpoint_properties_groupId')]",
+				"fqdns": "[parameters('gen2privateendpoint_properties_fqdns')]"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/storageendppint')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('storageendppint_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('storageendppint_properties_groupId')]",
+				"fqdns": "[parameters('storageendppint_properties_fqdns')]"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/testgatewaype')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('testgatewaype_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('testgatewaype_properties_groupId')]",
+				"fqdns": "[parameters('testgatewaype_properties_fqdns')]"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy DBR to Gen2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureDatabricksDeltaLakeSource",
+								"query": "select * from default.table0625",
+								"exportSettings": {
+									"type": "AzureDatabricksDeltaLakeExportCommand"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "id",
+											"type": "Int"
+										},
+										"sink": {
+											"name": "id",
+											"type": "Int"
+										}
+									},
+									{
+										"source": {
+											"name": "dt",
+											"type": "String"
+										},
+										"sink": {
+											"name": "dt",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureDatabricksDeltaLakeDataset1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-07-15T06:37:38Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "testpermission",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-05-27T03:11:01Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vincydwwithmvnetandprivateendpoint",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "ProductKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CustomerKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PromotionKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SalesOrderNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrderQuantity",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "UnitPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "SalesAmount",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "synapsemonth",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Persons"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Binary1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServerfromvincyvm",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "test11.txt"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlServerLS1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "BusinessEntityID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NationalIDNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LoginID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrganizationNode",
+						"type": "AdventureWorks2016.sys.hierarchyid"
+					},
+					{
+						"name": "OrganizationLevel",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "JobTitle",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BirthDate",
+						"type": "date"
+					},
+					{
+						"name": "MaritalStatus",
+						"type": "nchar"
+					},
+					{
+						"name": "Gender",
+						"type": "nchar"
+					},
+					{
+						"name": "HireDate",
+						"type": "date"
+					},
+					{
+						"name": "SalariedFlag",
+						"type": "bit"
+					},
+					{
+						"name": "VacationHours",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SickLeaveHours",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CurrentFlag",
+						"type": "bit"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "HumanResources",
+					"table": "Employee"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLSGen2Vincy')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ADLSGen2Vincy_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ADLSGen2Vincy_accountKey')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime4",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime4",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/VincySynapse')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('VincySynapse_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime4",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sqlservervnet')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('sqlservervnet_properties_typeProperties_server')]",
+					"database": "[parameters('sqlservervnet_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('sqlservervnet_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('sqlservervnet_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime4",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/testdataflow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "vincyla"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          age as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> vincyla",
+						"vincyla sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          age as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copy synapse')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowPolyBase": true,
+								"polyBaseSettings": {
+									"rejectValue": 0,
+									"rejectType": "value",
+									"useTypeDefault": true
+								}
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "ADLSGen2Vincy",
+									"type": "LinkedServiceReference"
+								}
+							},
+							"parallelCopies": 16,
+							"dataIntegrationUnits": 32
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSynapseAnalyticsTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSynapseAnalyticsTable2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-01-17T02:15:39Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable2')]",
+				"[concat(variables('factoryId'), '/linkedServices/ADLSGen2Vincy')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/testgateway')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSynapseAnalyticsTable2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-05-30T06:56:01Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/testgateway_shir')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSynapseAnalyticsTable2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-05-30T09:30:19Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "sqlservervnet",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TEST1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/sqlservervnet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "VincySynapse",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "ProductKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CustomerKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PromotionKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SalesOrderNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrderQuantity",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "UnitPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "SalesAmount",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "synapsemonth",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FactInternetSales"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/VincySynapse')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Binary2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLSGen2Vincy",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "testadf"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLSGen2Vincy')]"
+			]
+		}
+	]
+}

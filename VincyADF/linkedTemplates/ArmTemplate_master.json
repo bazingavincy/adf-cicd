@@ -1,0 +1,460 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "VincyADF"
+		},
+		"ADLSGen2Vincy_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLSGen2Vincy'"
+		},
+		"Azure_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Azure'"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureBlobStorage2_servicePrincipalCredential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalCredential' of 'AzureBlobStorage2'"
+		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
+		"AzureMySql1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMySql1'"
+		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"DBR1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'DBR1'"
+		},
+		"Dataverse1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Dataverse1'"
+		},
+		"FileServerfromvincyvm_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FileServerfromvincyvm'"
+		},
+		"Gen2SAS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Gen2SAS'"
+		},
+		"SqlServerLS1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServerLS1'"
+		},
+		"VincySynapse_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'VincySynapse'"
+		},
+		"shantongdataverse_servicePrincipalCredential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalCredential' of 'shantongdataverse'"
+		},
+		"sqlservervnet_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'sqlservervnet'"
+		},
+		"vincydwwithmvnetandprivateendpoint_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'vincydwwithmvnetandprivateendpoint'"
+		},
+		"vincysqlserver_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'vincysqlserver'"
+		},
+		"yuansynapse_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'yuansynapse'"
+		},
+		"ADLSGen2Vincy_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://vincygen2.dfs.core.chinacloudapi.cn/"
+		},
+		"Azure_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "vincyserver.database.chinacloudapi.cn"
+		},
+		"Azure_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorks2022"
+		},
+		"Azure_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "vincytian"
+		},
+		"AzureBlobStorage2_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://vincyglobalstorage.blob.core.windows.net"
+		},
+		"AzureBlobStorage2_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "11271f3d-3800-4655-ba64-01957965b2ae"
+		},
+		"AzureBlobStorage2_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "de553ab9-7303-41d9-9519-866a78f9f1e2"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "vincyserver.database.chinacloudapi.cn"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "vincydb"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "vincytian"
+		},
+		"Dataverse1_properties_typeProperties_deploymentType": {
+			"type": "string",
+			"defaultValue": "Online"
+		},
+		"Dataverse1_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "huangjian@dynftegcr.onmicrosoft.com"
+		},
+		"FileServerfromvincyvm_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\testFile"
+		},
+		"FileServerfromvincyvm_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "vincytian"
+		},
+		"Gen2SAS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://vincygen2.dfs.core.chinacloudapi.cn/"
+		},
+		"shantongdataverse_properties_typeProperties_deploymentType": {
+			"type": "string",
+			"defaultValue": "Online"
+		},
+		"shantongdataverse_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "d1ad1b12-9b68-4bca-95c4-c938c0fb556c"
+		},
+		"sqlservervnet_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "vincyserver.database.chinacloudapi.cn"
+		},
+		"sqlservervnet_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "vincydb"
+		},
+		"sqlservervnet_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "vincytian"
+		},
+		"gen2pe_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincytest/providers/Microsoft.Storage/storageAccounts/vincygen2"
+		},
+		"gen2pe_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
+		},
+		"gen2pe_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"vincygen2.dfs.core.chinacloudapi.cn"
+			]
+		},
+		"gen2privateendpoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincytest/providers/Microsoft.Storage/storageAccounts/vincygen2"
+		},
+		"gen2privateendpoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"gen2privateendpoint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"vincygen2.blob.core.chinacloudapi.cn"
+			]
+		},
+		"storageendppint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincystorage/providers/Microsoft.Storage/storageAccounts/vincystoragecn3"
+		},
+		"storageendppint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"storageendppint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"vincystoragecn3.blob.core.chinacloudapi.cn"
+			]
+		},
+		"testgatewaype_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourceGroups/vincyRG01/providers/Microsoft.Sql/servers/vincyserver"
+		},
+		"testgatewaype_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"testgatewaype_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"vincyserver.database.chinacloudapi.cn"
+			]
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "VincyADF_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Azure_password": {
+						"value": "[parameters('Azure_password')]"
+					},
+					"AzureDatabricks1_accessToken": {
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
+					"AzureMySql1_connectionString": {
+						"value": "[parameters('AzureMySql1_connectionString')]"
+					},
+					"AzureSqlDatabase1_password": {
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					},
+					"DBR1_accessToken": {
+						"value": "[parameters('DBR1_accessToken')]"
+					},
+					"Dataverse1_password": {
+						"value": "[parameters('Dataverse1_password')]"
+					},
+					"Gen2SAS_accountKey": {
+						"value": "[parameters('Gen2SAS_accountKey')]"
+					},
+					"vincysqlserver_connectionString": {
+						"value": "[parameters('vincysqlserver_connectionString')]"
+					},
+					"yuansynapse_connectionString": {
+						"value": "[parameters('yuansynapse_connectionString')]"
+					},
+					"Azure_properties_typeProperties_server": {
+						"value": "[parameters('Azure_properties_typeProperties_server')]"
+					},
+					"Azure_properties_typeProperties_database": {
+						"value": "[parameters('Azure_properties_typeProperties_database')]"
+					},
+					"Azure_properties_typeProperties_userName": {
+						"value": "[parameters('Azure_properties_typeProperties_userName')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"Dataverse1_properties_typeProperties_deploymentType": {
+						"value": "[parameters('Dataverse1_properties_typeProperties_deploymentType')]"
+					},
+					"Dataverse1_properties_typeProperties_username": {
+						"value": "[parameters('Dataverse1_properties_typeProperties_username')]"
+					},
+					"Gen2SAS_properties_typeProperties_url": {
+						"value": "[parameters('Gen2SAS_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "VincyADF_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage2_servicePrincipalCredential": {
+						"value": "[parameters('AzureBlobStorage2_servicePrincipalCredential')]"
+					},
+					"FileServerfromvincyvm_password": {
+						"value": "[parameters('FileServerfromvincyvm_password')]"
+					},
+					"SqlServerLS1_connectionString": {
+						"value": "[parameters('SqlServerLS1_connectionString')]"
+					},
+					"shantongdataverse_servicePrincipalCredential": {
+						"value": "[parameters('shantongdataverse_servicePrincipalCredential')]"
+					},
+					"vincydwwithmvnetandprivateendpoint_connectionString": {
+						"value": "[parameters('vincydwwithmvnetandprivateendpoint_connectionString')]"
+					},
+					"AzureBlobStorage2_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('AzureBlobStorage2_properties_typeProperties_serviceEndpoint')]"
+					},
+					"AzureBlobStorage2_properties_typeProperties_tenant": {
+						"value": "[parameters('AzureBlobStorage2_properties_typeProperties_tenant')]"
+					},
+					"AzureBlobStorage2_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('AzureBlobStorage2_properties_typeProperties_servicePrincipalId')]"
+					},
+					"FileServerfromvincyvm_properties_typeProperties_host": {
+						"value": "[parameters('FileServerfromvincyvm_properties_typeProperties_host')]"
+					},
+					"FileServerfromvincyvm_properties_typeProperties_userId": {
+						"value": "[parameters('FileServerfromvincyvm_properties_typeProperties_userId')]"
+					},
+					"shantongdataverse_properties_typeProperties_deploymentType": {
+						"value": "[parameters('shantongdataverse_properties_typeProperties_deploymentType')]"
+					},
+					"shantongdataverse_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('shantongdataverse_properties_typeProperties_servicePrincipalId')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VincyADF_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "VincyADF_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLSGen2Vincy_accountKey": {
+						"value": "[parameters('ADLSGen2Vincy_accountKey')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"VincySynapse_connectionString": {
+						"value": "[parameters('VincySynapse_connectionString')]"
+					},
+					"sqlservervnet_password": {
+						"value": "[parameters('sqlservervnet_password')]"
+					},
+					"gen2pe_properties_privateLinkResourceId": {
+						"value": "[parameters('gen2pe_properties_privateLinkResourceId')]"
+					},
+					"gen2pe_properties_groupId": {
+						"value": "[parameters('gen2pe_properties_groupId')]"
+					},
+					"gen2pe_properties_fqdns": {
+						"value": "[parameters('gen2pe_properties_fqdns')]"
+					},
+					"gen2privateendpoint_properties_privateLinkResourceId": {
+						"value": "[parameters('gen2privateendpoint_properties_privateLinkResourceId')]"
+					},
+					"gen2privateendpoint_properties_groupId": {
+						"value": "[parameters('gen2privateendpoint_properties_groupId')]"
+					},
+					"gen2privateendpoint_properties_fqdns": {
+						"value": "[parameters('gen2privateendpoint_properties_fqdns')]"
+					},
+					"storageendppint_properties_privateLinkResourceId": {
+						"value": "[parameters('storageendppint_properties_privateLinkResourceId')]"
+					},
+					"storageendppint_properties_groupId": {
+						"value": "[parameters('storageendppint_properties_groupId')]"
+					},
+					"storageendppint_properties_fqdns": {
+						"value": "[parameters('storageendppint_properties_fqdns')]"
+					},
+					"testgatewaype_properties_privateLinkResourceId": {
+						"value": "[parameters('testgatewaype_properties_privateLinkResourceId')]"
+					},
+					"testgatewaype_properties_groupId": {
+						"value": "[parameters('testgatewaype_properties_groupId')]"
+					},
+					"testgatewaype_properties_fqdns": {
+						"value": "[parameters('testgatewaype_properties_fqdns')]"
+					},
+					"ADLSGen2Vincy_properties_typeProperties_url": {
+						"value": "[parameters('ADLSGen2Vincy_properties_typeProperties_url')]"
+					},
+					"sqlservervnet_properties_typeProperties_server": {
+						"value": "[parameters('sqlservervnet_properties_typeProperties_server')]"
+					},
+					"sqlservervnet_properties_typeProperties_database": {
+						"value": "[parameters('sqlservervnet_properties_typeProperties_database')]"
+					},
+					"sqlservervnet_properties_typeProperties_userName": {
+						"value": "[parameters('sqlservervnet_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VincyADF_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "VincyADF_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VincyADF_ArmTemplate_2')]"
+			]
+		}
+	]
+}

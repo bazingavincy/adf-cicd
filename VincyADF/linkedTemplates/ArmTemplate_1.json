@@ -1,0 +1,623 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "VincyADF"
+		},
+		"AzureBlobStorage2_servicePrincipalCredential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalCredential' of 'AzureBlobStorage2'"
+		},
+		"FileServerfromvincyvm_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FileServerfromvincyvm'"
+		},
+		"SqlServerLS1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServerLS1'"
+		},
+		"shantongdataverse_servicePrincipalCredential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalCredential' of 'shantongdataverse'"
+		},
+		"vincydwwithmvnetandprivateendpoint_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'vincydwwithmvnetandprivateendpoint'"
+		},
+		"AzureBlobStorage2_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://vincyglobalstorage.blob.core.windows.net"
+		},
+		"AzureBlobStorage2_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "11271f3d-3800-4655-ba64-01957965b2ae"
+		},
+		"AzureBlobStorage2_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "de553ab9-7303-41d9-9519-866a78f9f1e2"
+		},
+		"FileServerfromvincyvm_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\testFile"
+		},
+		"FileServerfromvincyvm_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "vincytian"
+		},
+		"shantongdataverse_properties_typeProperties_deploymentType": {
+			"type": "string",
+			"defaultValue": "Online"
+		},
+		"shantongdataverse_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "d1ad1b12-9b68-4bca-95c4-c938c0fb556c"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntimevm')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vincySHIR')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vincySHIR2')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vincyazurevmIR')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vmir')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/credential1')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {
+					"resourceId": "/subscriptions/51ee321a-9ad4-479b-8913-1955daa50948/resourcegroups/sql_server/providers/Microsoft.ManagedIdentity/userAssignedIdentities/vincyuamiforpsql"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/adfcdc1')]",
+			"type": "Microsoft.DataFactory/factories/adfcdcs",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"SourceConnectionsInfo": [
+					{
+						"SourceEntities": [
+							{
+								"name": "dbo.IncrementalTable",
+								"properties": {
+									"schema": [],
+									"dslConnectorProperties": [
+										{
+											"name": "schemaName",
+											"value": "dbo"
+										},
+										{
+											"name": "tableName",
+											"value": "IncrementalTable"
+										},
+										{
+											"name": "enableCdc",
+											"value": true
+										},
+										{
+											"name": "waterMarkColumn",
+											"value": "DateColumn"
+										}
+									]
+								}
+							}
+						],
+						"Connection": {
+							"linkedServiceType": "AzureSqlDatabase",
+							"type": "linkedservicetype",
+							"isInlineDataset": true,
+							"commonDslConnectorProperties": [
+								{
+									"name": "allowSchemaDrift",
+									"value": true
+								},
+								{
+									"name": "inferDriftedColumnTypes",
+									"value": true
+								},
+								{
+									"name": "format",
+									"value": "table"
+								},
+								{
+									"name": "store",
+									"value": "sqlserver"
+								},
+								{
+									"name": "databaseType",
+									"value": "databaseType"
+								},
+								{
+									"name": "database",
+									"value": "database"
+								},
+								{
+									"name": "skipInitialLoad",
+									"value": true
+								}
+							]
+						}
+					}
+				],
+				"TargetConnectionsInfo": [
+					{
+						"TargetEntities": [
+							{
+								"name": "dbo.IncrementalTablesink",
+								"properties": {
+									"schema": [],
+									"dslConnectorProperties": [
+										{
+											"name": "schemaName",
+											"value": "dbo"
+										},
+										{
+											"name": "tableName",
+											"value": "IncrementalTablesink"
+										}
+									]
+								}
+							}
+						],
+						"Connection": {
+							"linkedServiceType": "AzureSqlDatabase",
+							"type": "linkedservicetype",
+							"isInlineDataset": true,
+							"commonDslConnectorProperties": [
+								{
+									"name": "allowSchemaDrift",
+									"value": true
+								},
+								{
+									"name": "inferDriftedColumnTypes",
+									"value": true
+								},
+								{
+									"name": "format",
+									"value": "table"
+								},
+								{
+									"name": "store",
+									"value": "sqlserver"
+								},
+								{
+									"name": "databaseType",
+									"value": "databaseType"
+								},
+								{
+									"name": "database",
+									"value": "database"
+								},
+								{
+									"name": "deletable",
+									"value": false
+								},
+								{
+									"name": "insertable",
+									"value": true
+								},
+								{
+									"name": "updateable",
+									"value": false
+								},
+								{
+									"name": "upsertable",
+									"value": false
+								},
+								{
+									"name": "skipDuplicateMapInputs",
+									"value": true
+								},
+								{
+									"name": "skipDuplicateMapOutputs",
+									"value": true
+								}
+							]
+						},
+						"DataMapperMappings": [
+							{
+								"targetEntityName": "dbo.IncrementalTablesink",
+								"sourceEntityName": "dbo.IncrementalTable",
+								"sourceConnectionReference": {
+									"connectionName": "AzureSqlCDC",
+									"type": "linkedservicetype"
+								},
+								"attributeMappingInfo": {
+									"attributeMappings": []
+								}
+							}
+						],
+						"Relationships": []
+					}
+				],
+				"Policy": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 15
+					},
+					"mode": "Microbatch"
+				},
+				"status": "PipelineRunCreated",
+				"allowVNetOverride": false,
+				"id": "d5b0b8675c944859b9dbcfe02bae4658"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLakeDataset1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DBR1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLakeDataset",
+				"typeProperties": {
+					"database": "default",
+					"table": "table0625"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vincysqlserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "age",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TEST1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vincysqlserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "age",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TEST2"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "yuansynapse",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "ProductKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CustomerKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PromotionKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SalesOrderNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrderQuantity",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "UnitPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "SalesAmount",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "synapsemonth",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FactInternetSales"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataverseEntity1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Dataverse1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CommonDataServiceForAppsEntity",
+				"schema": [],
+				"typeProperties": {
+					"entityName": "aciviewmapper"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Gen2SAS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "foradf"
+					},
+					"compressionCodec": "none"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"azureCloudType": "AzurePublic",
+					"serviceEndpoint": "[parameters('AzureBlobStorage2_properties_typeProperties_serviceEndpoint')]",
+					"tenant": "[parameters('AzureBlobStorage2_properties_typeProperties_tenant')]",
+					"servicePrincipalId": "[parameters('AzureBlobStorage2_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredentialType": "ServicePrincipalKey",
+					"servicePrincipalCredential": {
+						"type": "SecureString",
+						"value": "[parameters('AzureBlobStorage2_servicePrincipalCredential')]"
+					},
+					"accountKind": "StorageV2"
+				},
+				"connectVia": {
+					"referenceName": "vincySHIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/vincySHIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FileServerfromvincyvm')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('FileServerfromvincyvm_properties_typeProperties_host')]",
+					"userId": "[parameters('FileServerfromvincyvm_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('FileServerfromvincyvm_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "vincyazurevmIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/vincyazurevmIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerLS1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('SqlServerLS1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/shantongdataverse')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CommonDataServiceForApps",
+				"typeProperties": {
+					"deploymentType": "[parameters('shantongdataverse_properties_typeProperties_deploymentType')]",
+					"serviceUri": "https://shantongtest.crm5.dynamics.com/  ",
+					"authenticationType": "AADServicePrincipal",
+					"servicePrincipalId": "[parameters('shantongdataverse_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredential": {
+						"type": "SecureString",
+						"value": "[parameters('shantongdataverse_servicePrincipalCredential')]"
+					},
+					"servicePrincipalCredentialType": "ServicePrincipalKey"
+				},
+				"connectVia": {
+					"referenceName": "vincySHIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/vincySHIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vincydwwithmvnetandprivateendpoint')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('vincydwwithmvnetandprivateendpoint_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "vincySHIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/vincySHIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime4')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "chinaeast2",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false,
+							"customProperties": []
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60,
+							"numberOfPipelineNodes": 1,
+							"numberOfExternalNodes": 1
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		}
+	]
+}
